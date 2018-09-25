@@ -1,0 +1,15 @@
+<section id="commentaires">
+  {% for ami in amis%}
+      <hr>
+        <p>Son username :  {{ami.username}}</p>
+        <p>Son email :  {{ami.email}}</p>
+
+
+
+          <button type"submit" class="btn btn-danger" onclick="window.location.href='/amisedelete/{{ami.id}}'">Supprime</button>
+
+
+      <hr>
+  {% endfor %}
+  <button type"submit" class="btn btn-success" onclick="window.location.href='/amis/add'">ADD</button>
+</section>

@@ -1,0 +1,34 @@
+해냈다. 정민아 !!!!!!!!1
+
+  // $scope.user = [
+    // {  username: ''},
+    // {  password: ''},
+    // {  mail: ''},
+    // ];
+
+이거 없애니까 object 받아지네??????? il faut supprimer ca ...
+
+
+---------------------------------------------------------------------
+c'est ce qu'avant
+
+factory('loginService', function($http){
+    return{
+      login:function(user,scope){
+        var $promise= $http.post('app/data/user.php', user);
+        $promise.then(function(msg){
+
+          // console.log(msg.data);
+          // var uid=msg.data;
+          if(msg.data=='success')
+          scope.msgtxt="Vous ete reussir"
+          //
+          //   // sessionService.set('user',uid);
+            // console.log('succes login');
+          //
+          else
+            // console.log('error log');
+          scope.msgtxt="Essayer encore"
+        });
+      }
+      }

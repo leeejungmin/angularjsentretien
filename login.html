@@ -1,0 +1,18 @@
+
+
+<form name="form1"
+      role="form" ng-submit="" novalidate>
+  <p>Welcome : {{user.mail}} </p>
+  <div class="form-group">
+    <input placeholder="votre email" id="username" required
+         ng-model="user.mail" type="text" class="form-control">
+    </div>
+  <div class="form-group">
+    <input placeholder="Mote de passe" id="password" required
+         ng-model="user.password" type="password" class="form-control">
+    </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-success" ng-click="login(user)" ng-disabled="form1.$invalid">Connexion</button>
+    </div>
+    {{msgtxt}}
+  </form>
