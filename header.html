@@ -1,5 +1,5 @@
 
-    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm" ng-controller="indexController">
 
       <h5 class="my-0 mr-md-auto font-weight-normal">
           <!-- {% if not app.user %}
@@ -11,7 +11,7 @@
       <nav class="my-2 my-md-0 mr-md-3">
           <!-- {% if app.user %} -->
         <a class="p-2 text-dark" href="#!/amis">Amis</a>
-        <a class="p-2 text-dark" href="#!/register">Register</a>
+        <a class="p-2 text-dark" href="#!/articleregister">Register</a>
         <a class="p-2 text-dark" href="#!/article">Profiter</a>
         <!-- <a class="p-2 text-dark" href=#!/registerarticle>Participer</a> -->
           <!-- {% else %} -->
@@ -20,11 +20,11 @@
         {% if not app.user %} -->
         <a class="p-2 text-dark" href="#!/login">Connexion</a>
         <!-- {% else %} -->
-        <a class="p-2 text-dark" ng-click="logout()" href="">Deconnexion</a>
+        <a class="p-2 text-dark"  href="" ng-click="logout()">Deconnexion</a>
         <!-- {% endif %} -->
       </nav>
         <!-- {% if not app.user %} -->
-      <a class="btn btn-outline-primary" href="{{path('security_registration')}}">Sign up</a>
+      <a class="btn btn-outline-primary" href="#!/register">Sign up</a>
       <!-- {% else %}
       {% endif %} -->
     </div>

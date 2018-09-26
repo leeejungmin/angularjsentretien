@@ -13,11 +13,7 @@ leeApp.
           templateUrl:'login.html',
           controller:'loginController',
         }).
-        when('/logout', {
-          // template: '<login-list></login-list>',
-          templateUrl:'logout.html',
-          // controller:'loginController',
-        }).
+
         when('/home', {
           // template: '<login-list></login-list>',
           templateUrl:'home.html',
@@ -26,28 +22,176 @@ leeApp.
         when('/article', {
           // template: '<article-list></article-list>'
           templateUrl:'article.html',
-          // controller:'articleController',
+          controller:'articlecontroller',
         }).
         when('/amis', {
           // template: '<amis-list></amis-list>'
           templateUrl:'amis.html',
-          // controller:'amisController',
+          controller:'amiscontroller',
+        }).
+        when('/addamis', {
+          // template: '<amis-list></amis-list>'
+          templateUrl:'amisadd.html',
+          controller:'addamiscontroller',
         }).
         when('/register', {
           // template: '<register-list></register-list>'
           templateUrl:'register.html',
-          // controller:'registerController',
+          controller:'userregistercon',
+        }).
+        when('/articleregister', {
+          // template: '<register-list></register-list>'
+          templateUrl:'articleregister.html',
+          controller:'artregiscontroller',
         }).
         otherwise({redirectTo : '/'});
     }
   ])
 
-  .controller('homeCtrl',['$scope' ,'loginService', function($scope,loginService){
-      $scope.txt='Page Home';
-      $scope.logout=function(){
-          loginService.logout();
-      }
+  .controller('homeCtrl',['$scope' ,'loginService', function($scope,loginService,$location){
+      $scope.txt='Bonne Jour!!!';
+
+      // $scope.login=function(){
+      //     $location.path('/login');
+      // };
+      // $scope.logout=function(){
+      //     $location.path('/logout');
+      // };
+      // $scope.register=function(){
+      //     $location.path('/register');
+      // };
+      // $scope.amis=function(){
+      //     $location.path('/amis');
+      // };
+      // $scope.article=function(){
+      //     $location.path('/article');
+      // };
+      // $scope.articleregister=function(){
+      //     $location.path('/articleregister');
+      // };
   }])
+  .controller('indexController',['$scope','loginService' , function($scope,loginService){
+
+    $scope.logout=function(){
+      loginService.logout();
+    };
+  }])
+  .controller('registerController',['$scope', function($scope, $http){
+      $scope.txt='Page Home';
+      $scope.register=function(){
+          // loginService.logout();
+          var email = $scope.email;
+          var username = $scope.username;
+          var password = $scope.password;
+          $http({
+            url: 'http://localhost/angularjs/app/data/testregister.php',
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            data: 'username='+username+'&password'+password+'&email'+email
+          }).then(function(reponse){
+              $location.path('/login');
+          })
+        }
+      }])
+       .controller('amiscontroller', function($scope, $http, $location) {
+
+         $scope.addamis=function(){
+             $location.path('/addamis');
+         };
+
+          $http.post("app/data/amisvoir.php")
+          .then(function (response)
+          {$scope.names = response.data;});
+
+          // $http.post("app/data/amisvoir2.php")
+          // .then(function (response)
+          // {
+          //   console.log(reponse.data);
+          //   $scope.namess = response.data;
+          // });
+
+          $scope.supprimamis=function(userid, amisid){
+            $http({
+              method:"POST",
+              url:"app/data/supprimamis.php",
+              data: {userid, amisid}
+            }).then(function(reponse){
+              // $scope.names = reponse.data;
+              // $scope.alertClass = 'success';
+              console.log(reponse.data);
+
+              $location.path('/home');
+            });
+          };
+
+        })
+        .controller('addamiscontroller', function($scope, $http, $location) {
+
+
+          $scope.registerShow=function(){
+            $scope.alertMsg = false;
+          }
+          $scope.registerSubmit=function(){
+              $http({
+                method:"POST",
+                url:"app/data/addamis.php",
+                data:$scope.registerData
+              }).then(function(reponse){
+                $scope.names = reponse.data;
+                $scope.alertClass = 'success';
+                console.log(reponse.data);
+                $location.path('/amis');
+              });
+          }
+
+        })
+
+
+      .controller('articlecontroller', function($scope, $http) {
+        $http.post("app/data/artvoir.php")
+        .then(function (response)
+        {$scope.names = response.data;});
+      })
+      .controller('artregiscontroller', function($scope, $http, $location) {
+
+
+        $scope.registerShow=function(){
+          $scope.alertMsg = false;
+        }
+        $scope.registerSubmit=function(){
+            $http({
+              method:"POST",
+              url:"app/data/artregis.php",
+              data:$scope.registerData
+            }).then(function(reponse){
+              $scope.names = reponse.data;
+              $scope.alertClass = 'success';
+              console.log(reponse.data);
+              $location.path('/article');
+            });
+        }
+      })
+      .controller('userregistercon', function($scope, $http, $location) {
+
+
+        $scope.registerShow=function(){
+          $scope.alertMsg = false;
+        }
+        $scope.registerSubmit=function(){
+            $http({
+              method:"POST",
+              url:"app/data/userregister.php",
+              data:$scope.registerData
+            }).then(function(reponse){
+              $scope.names = reponse.data;
+              $scope.alertClass = 'success';
+              console.log(reponse.data);
+              $location.path('/login');
+            });
+        }
+      })
 
   .controller('loginController', function ($scope,loginService) {
     // $scope.user = [
@@ -98,15 +242,17 @@ leeApp.
       login:function(data,scope){
         var $promise=$http.post('app/data/user.php',data);
         $promise.then(function(msg){
+          console.log(msg);
           var uid=msg.data;
           if(uid){
 
-            sessionService.set('uid',uid);//'user'
+            sessionService.set('uid',uid );//'user'
             $location.path('/home');
           }
           else {
-            scope.msgtxt="incorrect!";
             $location.path('/login');
+            console.log(msgtxt);
+            loginController.scope.msgtxt="incorrect!";
           }
         });
       },

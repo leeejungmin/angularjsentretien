@@ -1,18 +1,18 @@
-<form action="#" method="post">
+<form ng-controller="userregistercon" ng-submit="">
 
   <div class="form-group">
-    <input placeholder="username" required name="username"
+    <input placeholder="username" ng-model="registerData.username" required name="username"
     type="text" class="form-control">
     </div>
   <div class="form-group">
-    <input placeholder="email" required name="email"
+    <input placeholder="email" ng-model="registerData.email" required name="email"
     type="text" class="form-control">
     </div>
   <div class="form-group">
-    <input placeholder="Mote de passe" required name="password"
+    <input placeholder="Mote de passe" ng-model="registerData.password" required name="password"
     type="password" class="form-control">
     </div>
   <div class="form-group">
-    <button type="submit" class="btn btn-success">Connexion</button>
+    <button type="submit" ng-click="registerSubmit()" class="btn btn-success">ADD</button>
     </div>
   </form>
