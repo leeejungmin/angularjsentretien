@@ -15,18 +15,18 @@
         <img src={{x.nourriture}} alt="" height="350" width="700">
 
 
-        <!-- <p> Nationalité est {{x.nourriture}} </p> -->
+
         <p> Nationalité est {{x.race}} </p>
         <p> Famille est {{x.famille}} </p>
         <p> Mon age est {{x.age}} </p>
 
+        <button class="btn btn-danger" ng-click="deleteart(x.id)">Delete</button>
         <hr>
       </div>
 
       <!-- {% if  user %}
         {% if  art.User == user %} -->
 <!--
-        <button type"submit" class="btn btn-danger" onclick="window.location.href='/articledelete/{{art.id}}'">Delete</button>
         <button type"submit" class="btn btn-default" onclick="window.location.href='/articleedit/{{art.id}}'">Edit</button> -->
 
         <!-- {% endif%}

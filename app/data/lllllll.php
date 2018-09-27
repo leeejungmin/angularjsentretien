@@ -1,10 +1,12 @@
 <?php
-
+session_start();
 include 'dbh.php';
 
 // $user = json_decode(file_get_contents('php://input'));
 $output = array();
-$userid = 18;
+$userid = $_SESSION['uid'];
+$useridd = intval($userid);
+
 $sql="SELECT * FROM friends WHERE user_id = '$userid'";
 $result = mysqli_query($conn,$sql);
 $row = mysqli_fetch_array($result)

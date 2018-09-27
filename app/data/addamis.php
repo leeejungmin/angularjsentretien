@@ -1,9 +1,9 @@
 <?php
-
+session_start();
 include 'dbh.php';
 
 $user = json_decode(file_get_contents('php://input'));
-$userid = 30;
+$userid = $_SESSION['uid'];
 $friend_user_email = $user->email;
 
 $useridd = intval($userid);
@@ -25,11 +25,13 @@ if (mysqli_query($conn,$sqlToInputFriend)){
 
   echo 'good jungmin';
   echo $friend_user_email;
-
+  echo $amisid;
 }else{
 
   echo 'essayer';
   echo $friend_user_email;
+  // echo $useridd;
+  echo $amisid;
 }
 
 /// juste ajouter amis

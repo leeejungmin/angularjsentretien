@@ -1,0 +1,9 @@
+http://localhost/angularjs/index.html#!/
+
+$user = json_decode(file_get_contents('php://input'));
+$userid = $user->getuserid;
+
+  <!-- $user = json_decode(file_get_contents('php://input'));
+    $output = array();
+    $userid = $user->product->getuserid;
+    $useridd = intval($userid); -->

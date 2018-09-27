@@ -1,0 +1,9 @@
+SELECT username, email FROM USER WHERE IN (SELECT friend_user_id FROM friends WHERE user_id = 18);
+
+SELECT username, email FROM USER WHERE  id = (SELECT friend_user_id FROM friends WHERE user_id = 18 and friend_user_id = 30);
+
+$sql="SELECT email FROM user.userid INNER JOIN friends.friend_user_id WHERE  user_id = 32;
+
+SELECT email, username FROM user INNER JOIN friends WHERE  friends.user_id = 32;
+
+SELECT email, username FROM user INNER JOIN friends WHERE  user.id = friends.friend_user_id and friends.user_id = 32;

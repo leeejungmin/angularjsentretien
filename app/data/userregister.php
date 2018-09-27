@@ -1,11 +1,12 @@
 <?php
+session_start();
 
 include 'dbh.php';
 
 $registerData = json_decode(file_get_contents('php://input'));
 
 
-$userid = '1';
+
 $username = $registerData->username;
 $email = $registerData->email;
 $password = $registerData->password;

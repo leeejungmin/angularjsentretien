@@ -48,62 +48,58 @@ leeApp.
     }
   ])
 
-  .controller('homeCtrl',['$scope' ,'loginService', function($scope,loginService,$location){
-      $scope.txt='Bonne Jour!!!';
+        .controller('homeCtrl',['$scope' ,'loginService', function($scope,loginService,$location){
+            $scope.txt='Bonne Jour!!!';
 
-      // $scope.login=function(){
-      //     $location.path('/login');
-      // };
-      // $scope.logout=function(){
-      //     $location.path('/logout');
-      // };
-      // $scope.register=function(){
-      //     $location.path('/register');
-      // };
-      // $scope.amis=function(){
-      //     $location.path('/amis');
-      // };
-      // $scope.article=function(){
-      //     $location.path('/article');
-      // };
-      // $scope.articleregister=function(){
-      //     $location.path('/articleregister');
-      // };
-  }])
-  .controller('indexController',['$scope','loginService' , function($scope,loginService){
+            $scope.logout=function(){
+              loginService.logout();
+            };
+            // $scope.login=function(){
+            //     $location.path('/login');
+            // };
+            // $scope.logout=function(){
+            //     $location.path('/logout');
+            // };
+            // $scope.register=function(){
+            //     $location.path('/register');
+            // };
+            // $scope.amis=function(){
+            //     $location.path('/amis');
+            // };
+            // $scope.article=function(){
+            //     $location.path('/article');
+            // };
+            // $scope.articleregister=function(){
+            //     $location.path('/articleregister');
+            // };
+        }])
+        .controller('indexController',['$scope','loginService' , function($scope, $http, loginService , $location){
+          $scope.getuserid = sessionStorage.length;
 
-    $scope.logout=function(){
-      loginService.logout();
-    };
-  }])
-  .controller('registerController',['$scope', function($scope, $http){
-      $scope.txt='Page Home';
-      $scope.register=function(){
-          // loginService.logout();
-          var email = $scope.email;
-          var username = $scope.username;
-          var password = $scope.password;
-          $http({
-            url: 'http://localhost/angularjs/app/data/testregister.php',
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            data: 'username='+username+'&password'+password+'&email'+email
-          }).then(function(reponse){
-              $location.path('/login');
-          })
-        }
-      }])
-       .controller('amiscontroller', function($scope, $http, $location) {
+          $scope.home=function(){
+              $location.path('/home');
+          };
 
+          $scope.logout=function(){
+            loginService.logout();
+          };
+        }])
+
+       .controller('amiscontroller', function($scope, $http, $location, sessionService) {
+         $scope.getuserid = sessionStorage.uid;
          $scope.addamis=function(){
              $location.path('/addamis');
          };
 
+         $scope.getuserid = sessionStorage.uid;
+             // sessionService.getItem('uid');
+             // var Indata = {'product':$scope.getuserid};
+
+
           $http.post("app/data/amisvoir.php")
           .then(function (response)
-          {$scope.names = response.data;});
+          { console.log(response.data);
+            $scope.names = response.data;});
 
           // $http.post("app/data/amisvoir2.php")
           // .then(function (response)
@@ -113,6 +109,7 @@ leeApp.
           // });
 
           $scope.supprimamis=function(userid, amisid){
+            $scope.getuserid = sessionStorage.uid;
             $http({
               method:"POST",
               url:"app/data/supprimamis.php",
@@ -129,7 +126,7 @@ leeApp.
         })
         .controller('addamiscontroller', function($scope, $http, $location) {
 
-
+          $scope.getuserid = sessionStorage.uid;
           $scope.registerShow=function(){
             $scope.alertMsg = false;
           }
@@ -150,24 +147,39 @@ leeApp.
 
 
       .controller('articlecontroller', function($scope, $http) {
+        $scope.getuserid = sessionStorage.uid;
         $http.post("app/data/artvoir.php")
         .then(function (response)
         {$scope.names = response.data;});
+
+        $scope.deleteart=function(artid){
+            $http({
+              method:"POST",
+              url:"app/data/supprimart.php",
+              data:$scope.artid
+            }).then(function(reponse){
+              $scope.names = reponse.data;
+              $scope.alertClass = 'success';
+              console.log(reponse.data);
+              $location.path('/amis');
+            });
+        }
+
       })
+
       .controller('artregiscontroller', function($scope, $http, $location) {
 
+        $scope.getuserid = sessionStorage.uid;
+        // var rep[] = ($scope.registerData,  $scope.getuserid);
 
-        $scope.registerShow=function(){
-          $scope.alertMsg = false;
-        }
         $scope.registerSubmit=function(){
             $http({
               method:"POST",
               url:"app/data/artregis.php",
-              data:$scope.registerData
+              data: $scope.registerData
             }).then(function(reponse){
               $scope.names = reponse.data;
-              $scope.alertClass = 'success';
+              // $scope.alertClass = 'success';
               console.log(reponse.data);
               $location.path('/article');
             });
@@ -175,7 +187,7 @@ leeApp.
       })
       .controller('userregistercon', function($scope, $http, $location) {
 
-
+        $scope.getuserid = sessionStorage.uid;
         $scope.registerShow=function(){
           $scope.alertMsg = false;
         }
@@ -256,7 +268,8 @@ leeApp.
           }
         });
       },
-      logout: function(){
+      logout:function(){
+          console.log('uid');
           sessionService.destroy('uid');//'user'
           $location.path('/login');
         },

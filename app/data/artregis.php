@@ -1,35 +1,39 @@
 <?php
 
 include 'dbh.php';
+session_start();
 
 $registerData = json_decode(file_get_contents('php://input'));
 
+$userid = $_SESSION['uid'];
+$useridd = intval($userid);
 
-$userid = '1';
+
 $famille = $registerData->famille;
 $age = $registerData->age;
 $race = $registerData->race;
 $nourriture = $registerData->nourriture;
-
-// $userid = mysqli_real_escape_string($conn,$userid);
-// $famille = mysqli_real_escape_string($conn,$famille);
-// $age = mysqli_real_escape_string($conn, $age);
-// $race = mysqli_real_escape_string($conn, $race);
-// $nourriture = mysqli_real_escape_string($conn, $nourriture);
+// $famille = "GREATTTT";
+// $age = 100;
+// $race = "ESPANOLE";
+// $nourriture ="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvJTarTLMUXQoJWrdf6Jedp41RL_FEt0qrY59CE-POuZiHEIq2yQ" ;
 
 
-$sql = "INSERT INTO article ( famille, age, race, nourriture) VALUES ( '$famille',  '$age',  '$race' , '$nourriture' )";
 
-if ( mysqli_query($conn, $sql)){
 
-  echo 'good jungmin';
-  echo $famille;
-
-}else{
-
-  echo 'essayer';
-}
-mysqli_close($conn);
+ $sql = "INSERT INTO article ( user_id, famille, age, race, nourriture) VALUES ($useridd , '$famille',  '$age',  '$race' , '$nourriture' )";
+ $result = mysqli_query($conn, $sql);
+ echo json_encode($result);
+// if ( mysqli_query($conn, $sql)){
+//
+//   echo 'good jungmin';
+//   echo $famille;
+//
+// }else{
+//   echo $useridd;
+//   echo 'essayer';
+// }
+// mysqli_close($conn);
 
 // $output = array(
 //   'good' => $message
