@@ -1,0 +1,58 @@
+<script>
+leeApp.controller('amischerchController',['$scope' , function($scope, $http, $location){
+
+
+$scope.deleteart=function(artid){
+$http({
+method:"POST",
+url:"user.php",
+
+}).then(function(reponse){
+$scope.amis = reponse.data;
+
+console.log(reponse.data);
+$location.path('/amischerch');
+});
+}
+
+}
+</script>
+
+
+
+
+
+
+
+  // var leeApp = angular.module('leeApp', ['ngRoute','leeApp.controllers']);
+
+    //   leeApp.
+    //   config([ '$routeProvider',' $interpolateProvider' ,
+    //   function config( $routeProvider, $interpolateProvider) {
+    //     // $locationProvider.hashPrefix('!');
+    //     $interpolateProvider.startSymbol('||');
+    //     $interpolateProvider.endSymbol('||');
+    //   }
+    // ]);
+
+
+
+{% extends 'base.html.twig' %}
+
+
+{%  block body %}
+{% verbatim %}
+<div ng-controller="amischerchController">
+  Search : <input type="text" placeholder="Cherche amis" ng-model="searchText.username" />
+  <br /> <br />
+  <tr ng-repeat="ami in amis | filter:searchText">
+    <td>{{ami.username}} </td>
+    <td>{{ami.email}} </td>
+  </tr>
+</div>
+
+
+{% endverbatim %}
+{% block javascripts %}
+{% endblock %}
+{% endblock %}

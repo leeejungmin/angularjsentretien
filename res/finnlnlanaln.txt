@@ -1,0 +1,30 @@
+{% for ami in amis  %}
+<hr>
+<p>Son username :  {{ami.username}}</p>
+<p>Son email :  {{ami.email}}</p>
+
+<br>
+{% endfor %}
+
+<td>[[ami.username]] </td>
+    <td>[[ami.email]] </td>
+
+
+
+<tr ng-repeat="ami in amis | filter:searchText">
+
+
+
+
+
+
+
+  <tr ng-repeat= " ami in amis >
+    [[amis[0].username]]
+    [[amis[1].username]]
+    [[amis[2].username]]
+    [[amis[3].username]]
+    [[amis[4].username]]
+    [[amis[5].username]]
+    [[amis[6].username]]
+    [[amis[7].username]]
